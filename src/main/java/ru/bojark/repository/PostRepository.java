@@ -2,28 +2,53 @@ package ru.bojark.repository;
 
 import ru.bojark.model.Post;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
 
-// Stub
 public class PostRepository {
 
-  private AtomicInteger idCount = new AtomicInteger(0);
-  private Map<Integer, Post> posts = new ConcurrentHashMap<>();
+    private final AtomicLong idCount = new AtomicLong(1);
+    private final Map<Long, Post> posts = new ConcurrentHashMap<>();
 
-  public List<Post> all() {
-    return Collections.emptyList();
-  }
+    public List<Post> all() {
+        return new ArrayList<>(posts.values());
+    }
 
-  public Optional<Post> getById(long id) {
-    return Optional.empty();
-  }
+    public Optional<Post> getById(long id) {
+        return Optional.of(posts.get(id));
+    }
 
-  public Post save(Post post) {
-    return post;
-  }
+    public Post save(Post post) {
+        long id = post.getId();
 
-  public void removeById(long id) {
-  }
+        if (id == 0) {
+            newPost(post);
+        }
+
+        if (id != 0) {
+            if (posts.get(id) == null) {
+                newPost(post);
+            } else {
+                posts.put(id, post);
+            }
+        }
+
+        return post;
+    }
+
+    public void removeById(long id) {
+        if(posts.get(id) != null){
+            posts.remove(id);
+        }
+    }
+
+    private void newPost(Post post) {
+        long currentId = idCount.getAndAdd(1);
+        posts.put(currentId, post);
+    }
+
 }
