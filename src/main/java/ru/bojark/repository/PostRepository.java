@@ -14,6 +14,10 @@ public class PostRepository {
     private final AtomicLong idCount = new AtomicLong(1);
     private final Map<Long, Post> posts = new ConcurrentHashMap<>();
 
+    public PostRepository(){
+        posts.put(0L, new Post(0, "EMPTY"));
+    }
+
     public List<Post> all() {
         return new ArrayList<>(posts.values());
     }
@@ -41,7 +45,7 @@ public class PostRepository {
     }
 
     public void removeById(long id) {
-        if(posts.get(id) != null){
+        if(posts.get(id) != null && id != 0){
             posts.remove(id);
         }
     }

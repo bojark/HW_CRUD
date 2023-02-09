@@ -17,7 +17,7 @@ public class PostService {
         return repository.all();
     }
 
-    public Post getById(int id) {
+    public Post getById(long id) {
         return repository.getById(id).orElseThrow(NotFoundException::new);
     }
 
