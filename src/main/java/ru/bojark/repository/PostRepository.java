@@ -9,13 +9,16 @@ import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
+
+
 public class PostRepository {
 
+    private static final String EMPTY_POST_TEXT = "There are no posts on the server right now.";
     private final AtomicLong idCount = new AtomicLong(1);
     private final Map<Long, Post> posts = new ConcurrentHashMap<>();
 
     public PostRepository(){
-        posts.put(0L, new Post(0, "EMPTY"));
+        posts.put(0L, new Post(0, EMPTY_POST_TEXT));
     }
 
     public List<Post> all() {
@@ -52,6 +55,7 @@ public class PostRepository {
 
     private void newPost(Post post) {
         long currentId = idCount.getAndAdd(1);
+        post.setId(currentId);
         posts.put(currentId, post);
     }
 

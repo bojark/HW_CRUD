@@ -10,6 +10,7 @@ import java.io.Reader;
 
 public class PostController {
     public static final String APPLICATION_JSON = "application/json";
+    private static final String POST_DELETED = "Post deleted.";
     private final PostService service;
     private final Gson GSON = new Gson();
 
@@ -39,7 +40,7 @@ public class PostController {
     public void removeById(long id, HttpServletResponse response) throws IOException {
         response.setContentType(APPLICATION_JSON);
         service.removeById(id);
-        response.getWriter().print(GSON.toJson(new Post(id, "Пост удалён!")));
+        response.getWriter().print(GSON.toJson(new Post(id, POST_DELETED)));
     }
 
 }
