@@ -1,11 +1,13 @@
 package ru.bojark.service;
 
+import org.springframework.stereotype.Service;
 import ru.bojark.exception.NotFoundException;
 import ru.bojark.model.Post;
 import ru.bojark.repository.PostRepository;
 
 import java.util.List;
 
+@Service
 public class PostService {
     private final PostRepository repository;
 

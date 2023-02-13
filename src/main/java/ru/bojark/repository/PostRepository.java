@@ -1,5 +1,6 @@
 package ru.bojark.repository;
 
+import org.springframework.stereotype.Repository;
 import ru.bojark.model.Post;
 
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ import java.util.concurrent.atomic.AtomicLong;
 
 
 
+@Repository
 public class PostRepository {
 
     private static final String EMPTY_POST_TEXT = "There are no posts on the server right now.";

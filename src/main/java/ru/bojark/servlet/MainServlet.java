@@ -1,5 +1,6 @@
 package ru.bojark.servlet;
 
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import ru.bojark.controller.PostController;
 import ru.bojark.repository.PostRepository;
 import ru.bojark.service.PostService;
@@ -14,15 +15,13 @@ public class MainServlet extends HttpServlet {
     private final static String POST = "POST";
     private final static String DELETE = "DELETE";
 
-
     private PostController controller;
 
 
     @Override
     public void init() {
-        final var repository = new PostRepository();
-        final var service = new PostService(repository);
-        controller = new PostController(service);
+        final var context = new AnnotationConfigApplicationContext("ru.bojark");
+        controller = (PostController) context.getBean("postController");
     }
 
     @Override
