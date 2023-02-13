@@ -1,8 +1,8 @@
 package ru.bojark.servlet;
 
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import ru.bojark.config.JavaConfig;
 import ru.bojark.controller.PostController;
-import ru.bojark.repository.PostRepository;
-import ru.bojark.service.PostService;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -20,14 +20,12 @@ public class MainServlet extends HttpServlet {
 
     @Override
     public void init() {
-        final var repository = new PostRepository();
-        final var service = new PostService(repository);
-        controller = new PostController(service);
+        final var context = new AnnotationConfigApplicationContext(JavaConfig.class);
+        controller = (PostController) context.getBean("postController");
     }
 
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) {
-        // если деплоились в root context, то достаточно этого
         try {
             final var path = req.getRequestURI();
             final var method = req.getMethod();
