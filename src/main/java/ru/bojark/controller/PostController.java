@@ -1,13 +1,17 @@
 package ru.bojark.controller;
 
 import com.google.gson.Gson;
+import org.springframework.web.bind.annotation.*;
 import ru.bojark.model.Post;
 import ru.bojark.service.PostService;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.Reader;
+import java.util.List;
 
+@RestController
+@RequestMapping("/api/posts")
 public class PostController {
     public static final String APPLICATION_JSON = "application/json";
     private static final String POST_DELETED = "Post deleted.";
@@ -18,29 +22,23 @@ public class PostController {
         this.service = service;
     }
 
-    public void all(HttpServletResponse response) throws IOException {
-        response.setContentType(APPLICATION_JSON);
-        final var data = service.all();
-        response.getWriter().print(GSON.toJson(data));
+    @GetMapping
+    public List<Post> all() {
+        return service.all();
     }
 
-    public void getById(long id, HttpServletResponse response) throws IOException {
-        response.setContentType(APPLICATION_JSON);
-        final var data = service.getById(id);
-        response.getWriter().print(GSON.toJson(data));
+    @GetMapping("/{id}")
+    public Post getById(@PathVariable long id) {
+        return service.getById(id);
     }
 
-    public void save(Reader body, HttpServletResponse response) throws IOException {
-        response.setContentType(APPLICATION_JSON);
-        final var post = GSON.fromJson(body, Post.class);
-        final var data = service.save(post);
-        response.getWriter().print(GSON.toJson(data));
+    @PostMapping
+    public Post save(@RequestBody Post post) {
+        return service.save(post);
     }
-
-    public void removeById(long id, HttpServletResponse response) throws IOException {
-        response.setContentType(APPLICATION_JSON);
+    @DeleteMapping("/{id}")
+    public void removeById(@PathVariable long id) throws IOException {
         service.removeById(id);
-        response.getWriter().print(GSON.toJson(new Post(id, POST_DELETED)));
     }
 
 }
