@@ -1,15 +1,10 @@
-# Домашнее задание к теме  «Servlets Containers»
+# CRUD-сервер
 
 ## Костин Иван
 
-За основу для выполнения задания взят код-образец от Нетологии.
 В этой ветке реализован контекстный DI на Java-конфиге (Java config)
 
-**Выполнены задания:**
-* Выполнен рефакторинг.
-* CRUD: реализована функциональность класса-репозитория
-* Реализована контекстная DI на Java-конфиге (Java Config) 
-
-**Задание в работе:**
-
-* WebApp Runner
+**На других ветках:**
+* [Ручная инициализация зависимостей в сервлете](https://github.com/bojark/my-CRUD-server)
+* [REST-сервер на Spring Web MV](https://github.com/bojark/my-CRUD-server/edit/feature/spring-web)
+* [DI на Spring с аннотациями (annotation config)](https://github.com/bojark/my-CRUD-server/tree/feature/di-annotation)
